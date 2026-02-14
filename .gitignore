@@ -12,7 +12,7 @@ tmp/
 data/
 
 # dotenv environment variable files
-.env
+# .env (Removed to allow Dockerfile COPY)
 .env.dev.local
 .env.test.local
 .env.production.local
