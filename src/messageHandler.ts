@@ -43,17 +43,33 @@ function shouldRespond(message: Message, clientId: string): boolean {
     return false
 }
 
+// Whether the bot is active (responding to messages)
+let isActive = true
+
 export async function handleMessage(message: Message, clientId: string) {
     // Quick check: should we even consider this message?
     if (message.author.id === clientId) return
     if (message.author.bot) return
 
-    // Owner-only commands
-    if (message.author.id === CONFIG.OWNER_ID && message.content.trim() === '.shutdown') {
-        await (message.channel as any).send('>>> 👋 Shutting down...')
-        console.log('[Shutdown] Owner requested shutdown')
-        process.exit(0)
+    // Owner-only commands (always work, even when shut down)
+    if (message.author.id === CONFIG.OWNER_ID) {
+        const cmd = message.content.trim().toLowerCase()
+        if (cmd === '.shutdown') {
+            isActive = false
+            await (message.channel as any).send('>>> 🔴 Bot disabled. Use `.revive` to re-enable.')
+            console.log('[Shutdown] Bot disabled by owner')
+            return
+        }
+        if (cmd === '.revive') {
+            isActive = true
+            await (message.channel as any).send('>>> 🟢 Bot re-enabled.')
+            console.log('[Revive] Bot re-enabled by owner')
+            return
+        }
     }
+
+    // If shut down, ignore everything
+    if (!isActive) return
 
     // Check mentions
     const isMentioned = message.mentions.users.has(clientId)
