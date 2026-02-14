@@ -12,8 +12,8 @@ done
 echo "[start.sh] Ollama is ready!"
 
 # Pull the model (skips if already present)
-echo "[start.sh] Pulling gemma3:1b model..."
-ollama pull gemma3:1b
+echo "[start.sh] Pulling phi4-mini model..."
+ollama pull phi4-mini
 echo "[start.sh] Model ready!"
 
 # Start the Discord bot
