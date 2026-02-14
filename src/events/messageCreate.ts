@@ -77,8 +77,8 @@ export default event(Events.MessageCreate, async ({ log, msgHist, channelHistory
     // Only respond if message mentions the bot
     if (!message.mentions.has(clientId)) return
 
-    // default stream to false
-    let shouldStream = false
+    // default stream to true for faster perceived response
+    let shouldStream = true
 
     // Params for Preferences Fetching
     const maxRetries = 3
