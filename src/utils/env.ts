@@ -10,19 +10,25 @@ config({ path: envFilePath })
 
 /**
  * Method to validate if environment variables found in file utils/env.ts
- * 
+ *
  * @param name Name of the environment variable in .env
- * @param fallback fallback value to set if environment variable is not set (used manually in src/keys.ts)
+ * @param defaultValue default value to set if environment variable is not set
  * @returns environment variable value
  */
-export function getEnvVar(name: string, fallback?: string): string {
-    const value = process.env[name] ?? fallback
-    if (!value)
-        throw new Error(`Environment variable ${name} is not set.`)
+export const getEnvVar = (name: string, defaultValue?: string): string => {
+    const value = process.env[name]
 
-    // validate User-Generated Discord Application Tokens 
+    if (!value && defaultValue) {
+        return defaultValue
+    }
+
+    if (!value) {
+        return '' // Return empty string instead of crashing
+    }
+
+    // validate User-Generated Discord Application Tokens
     if (name === "CLIENT_TOKEN" && value.length > 72)
-        throw new Error(`The "CLIENT_TOKEN" provided is not of at least length 72. 
+        throw new Error(`The "CLIENT_TOKEN" provided is not of at least length 72.
             This is probably an invalid token unless Discord updated their token policy. Please provide a valid token.`)
 
     // validate IPv4 address found in environment variables
