@@ -20,6 +20,8 @@ const host = Keys.ipAddress.includes('://')
     ? Keys.ipAddress
     : `http://${Keys.ipAddress}${Keys.portAddress ? `:${Keys.portAddress}` : ''}`
 
+console.log(`[Ollama Connection] Connecting to: ${host}`)
+
 export const ollama = new Ollama({
     host: host,
 })
