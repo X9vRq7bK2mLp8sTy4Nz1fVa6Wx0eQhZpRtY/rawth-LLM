@@ -96,8 +96,12 @@ client.on('clientReady', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
     console.log(`Using Model: ${MODEL_NAME}`);
     if (MONGO_URI) {
-        await mongoose.connect(MONGO_URI);
-        console.log("Connected to MongoDB");
+        try {
+            await mongoose.connect(MONGO_URI);
+            console.log("Connected to MongoDB");
+        } catch (err) {
+            console.error("MongoDB Connection Failed (Bot will continue without DB logging):", err.message);
+        }
     }
 });
 
