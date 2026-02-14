@@ -16,8 +16,12 @@ const client = new Client({
 })
 
 // initialize connection to ollama container
+const host = Keys.ipAddress.includes('://')
+    ? Keys.ipAddress
+    : `http://${Keys.ipAddress}${Keys.portAddress ? `:${Keys.portAddress}` : ''}`
+
 export const ollama = new Ollama({
-    host: `http://${Keys.ipAddress}:${Keys.portAddress}`,
+    host: host,
 })
 
 // Create Queue managed by Events
