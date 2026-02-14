@@ -1,19 +1,29 @@
-# use node LTS image for version 22
-FROM node:jod-alpine
+# Full Linux image (not Alpine) for Ollama compatibility
+FROM node:22-bookworm-slim
 
-# set working directory inside container
+# Install curl for health checks and Ollama
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Install Ollama
+RUN curl -fsSL https://ollama.com/install.sh | sh
+
+# Set working directory
 WORKDIR /app
 
-# copy package.json and the lock file into the container, and src files
+# Copy project files
 COPY ./src ./src
 COPY ./*.json ./
 COPY ./.env ./
+COPY ./start.sh ./
 
-# install dependencies, breaks
+# Make startup script executable
+RUN chmod +x start.sh
+
+# Install Node dependencies
 RUN npm install
 
-# build the typescript code
+# Build TypeScript
 RUN npm run build
 
-# start the application
-CMD ["npm", "run", "prod"]
+# Start both Ollama and the bot
+CMD ["./start.sh"]
