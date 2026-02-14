@@ -3,4 +3,5 @@ export const CONFIG = {
     OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || '',
     OPENROUTER_MODEL: process.env.OPENROUTER_MODEL || 'google/gemini-2.0-flash-exp:free',
     SYSTEM_PROMPT: process.env.SYSTEM_PROMPT || 'You are a helpful assistant. Keep responses concise and clear. Do not use markdown headers. Keep responses short unless asked for detail.',
+    OWNER_ID: '1380933421416714410',
 } as const
