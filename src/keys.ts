@@ -2,8 +2,8 @@ import { getEnvVar } from './utils/index.js'
 
 export const Keys = {
     clientToken: getEnvVar('CLIENT_TOKEN') || getEnvVar('DISCORD_TOKEN'),
-    ipAddress: getEnvVar('OLLAMA_IP', 'akg8o0g8go0kc4kc4ocgos40.152.53.186.59.sslip.io'), // your Coolify domain
-    portAddress: getEnvVar('OLLAMA_PORT', ''), // no default port as per request
+    ipAddress: getEnvVar('OLLAMA_IP', 'nk80css0gckgg0gg4s0g4cks.152.53.186.59.sslip.io'), // Your actual Ollama service
+    portAddress: getEnvVar('OLLAMA_PORT', ''), // Port handled by sslip.io mapping
     defaultModel: getEnvVar('MODEL', 'llama3.2')
 } as const // readonly keys
 
