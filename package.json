@@ -1,0 +1,13 @@
+{
+    "name": "discord-ai-bot",
+    "version": "1.0.0",
+    "description": "Ultra-fast AI Discord Bot on 0.5B model",
+    "main": "bot.js",
+    "dependencies": {
+        "discord.js": "^14.16.3",
+        "mongoose": "^8.9.5"
+    },
+    "scripts": {
+        "start": "node bot.js"
+    }
+}
