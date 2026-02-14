@@ -1,0 +1,48 @@
+name: Tests
+run-name: Unit Tests
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '*'
+      - 'package*.json'
+      - 'src/**'
+      - 'tests/**'
+      - '!docs/**'
+      - '!imgs/**'
+      - '!.github/**'
+      - '.github/workflows/**'
+      - '!.gitignore'
+      - '!LICENSE'
+      - '!README'
+
+jobs:
+  Discord-Node-Test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node Environment lts/jod
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: "npm"
+
+      - name: Install Project Dependencies
+        run: |
+          npm install
+
+      - name: Create Environment Variables
+        run: |
+          touch .env
+          echo CLIENT_TOKEN = ${{ secrets.BOT_TOKEN }} >> .env
+          echo OLLAMA_IP = ${{ secrets.OLLAMA_IP }} >> .env
+          echo OLLAMA_PORT = ${{ secrets.OLLAMA_PORT }} >> .env
+          echo MODEL = ${{ secrets.MODEL }} >> .env
+
+      - name: Test Application
+        run: |
+          npm run tests
