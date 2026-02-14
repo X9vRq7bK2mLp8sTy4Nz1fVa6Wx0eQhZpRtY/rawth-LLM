@@ -1,5 +1,6 @@
 import { Message } from 'discord.js-selfbot-v13'
 import { chatCompletion } from './openrouter'
+import { CONFIG } from './config'
 
 interface ConversationMessage {
     role: 'user' | 'assistant'
@@ -46,6 +47,13 @@ export async function handleMessage(message: Message, clientId: string) {
     // Quick check: should we even consider this message?
     if (message.author.id === clientId) return
     if (message.author.bot) return
+
+    // Owner-only commands
+    if (message.author.id === CONFIG.OWNER_ID && message.content.trim() === '.shutdown') {
+        await (message.channel as any).send('>>> 👋 Shutting down...')
+        console.log('[Shutdown] Owner requested shutdown')
+        process.exit(0)
+    }
 
     // Check mentions
     const isMentioned = message.mentions.users.has(clientId)
