@@ -1,46 +1,18 @@
 {
-  "name": "discord-ollama",
-  "version": "0.8.7",
-  "description": "Ollama Integration into discord",
+  "name": "rawth-selfbot",
+  "version": "1.0.0",
+  "description": "OpenRouter-powered Discord selfbot",
   "main": "build/index.js",
-  "exports": "./build/index.js",
   "scripts": {
-    "tests": "vitest run",
-    "coverage": "vitest run --coverage",
-    "watch": "tsx watch src",
     "build": "tsc",
     "prod": "node .",
-    "client": "npm run build && npm run prod",
-    "clean": "docker compose down && docker rmi $(docker images | grep kevinthedang | tr -s ' ' | cut -d ' ' -f 3) && docker rmi $(docker images --filter \"dangling=true\" -q --no-trunc)",
-    "start": "docker compose build --no-cache && docker compose up -d",
-    "docker:clean": "docker rm -f discord && docker rm -f ollama && docker network prune -f && docker rmi $(docker images | grep kevinthedang | tr -s ' ' | cut -d ' ' -f 3) && docker rmi $(docker images --filter \"dangling=true\" -q --no-trunc)",
-    "docker:network": "docker network create --subnet=172.18.0.0/16 ollama-net",
-    "docker:build": "docker build --no-cache -t kevinthedang/discord-ollama:$(node -p \"require('./package.json').version\") .",
-    "docker:build-latest": "docker build --no-cache -t kevinthedang/discord-ollama:latest .",
-    "docker:client": "docker run -d -v discord:/src/app --name discord --network ollama-net --ip 172.18.0.3 kevinthedang/discord-ollama:$(node -p \"require('./package.json').version\")",
-    "docker:ollama": "docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama --network ollama-net --ip 172.18.0.2 ollama/ollama:latest",
-    "docker:ollama-cpu": "docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama --network ollama-net --ip 172.18.0.2 ollama/ollama:latest",
-    "docker:start": "docker network prune -f && npm run docker:network && npm run docker:build && npm run docker:client && npm run docker:ollama",
-    "docker:start-cpu": "docker network prune -f && npm run docker:network && npm run docker:build && npm run docker:client && npm run docker:ollama-cpu"
+    "start": "npm run build && npm run prod"
   },
-  "author": "Kevin Dang",
-  "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.20.0",
-    "dotenv": "^16.5.0",
-    "ollama": "^0.5.15"
+    "discord.js-selfbot-v13": "^3.5.2"
   },
   "devDependencies": {
-    "@types/node": "^22.13.14",
-    "@vitest/coverage-v8": "^3.0.9",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.4"
-  },
-  "type": "module",
-  "engines": {
-    "npm": ">=10.9.0",
-    "node": ">=22.12.0"
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0"
   }
 }

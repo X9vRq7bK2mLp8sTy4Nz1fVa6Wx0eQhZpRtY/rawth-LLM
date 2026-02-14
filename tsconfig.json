@@ -1,29 +1,26 @@
 {
   "compilerOptions": {
-    // Dependent on node version
-    "target": "ES2020",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": [
+      "ES2022"
+    ],
+    "outDir": "./build",
+    "rootDir": "./src",
     "strict": true,
-    // We must set the type
-    "noImplicitAny": true,
-    "declaration": false,
-    // Will not go through node_modules
-    "skipDefaultLibCheck": true,
-    "strictNullChecks": true,
-    // We can import json files like JavaScript
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
-    // Decompile .ts to .js into a folder named build
-    "outDir": "build",
-    "rootDir": "src",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/"]
-    }
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
   },
-  // environment for env vars
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
 }
