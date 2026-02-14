@@ -29,18 +29,20 @@ export async function chatCompletion(messages: Message[]): Promise<string> {
                 ...messages
             ],
             max_tokens: 1500,
+            reasoning: { enabled: true },
         }),
     })
 
     if (!response.ok) {
         const errorText = await response.text()
-        throw new Error(`OpenRouter API error (${response.status}): ${errorText}`)
+        console.error(`[API] Error (${response.status}): ${errorText}`)
+        throw new Error(`VPS error: service temporarily unavailable (${response.status})`)
     }
 
     const data = await response.json() as OpenRouterResponse
 
     if (!data.choices || data.choices.length === 0) {
-        throw new Error('No response from OpenRouter')
+        throw new Error('VPS error: no response generated')
     }
 
     return data.choices[0].message.content

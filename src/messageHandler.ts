@@ -104,7 +104,7 @@ export async function handleMessage(message: Message, clientId: string) {
     } catch (error: any) {
         const elapsed = Date.now() - startTime
         console.error(`[Error] ${error.message}`)
-        const errorMsg = `>>> ⚠️ **Error**\n${error.message}\n\n-# responded in ${elapsed}ms`
+        const errorMsg = `>>> ⚠️ **Error**\nVPS error: service temporarily unavailable\n\n-# responded in ${elapsed}ms`
         await message.reply({ content: errorMsg }).catch(() => { })
     }
 }
